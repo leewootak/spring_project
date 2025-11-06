@@ -26,6 +26,6 @@ public class PageController {
 	// /loginPage => localhost:8080/loginPage
 	@GetMapping("/loginPage")
 	public String loginPage() {
-		return "loginPage/index";
+		return "login/index";
 	}
 }

@@ -13,7 +13,7 @@
 
 			<div id="container">
 				<div id="menuAdmin">
-					<h2 id="menuAdminH2">공지사항2</h2>
+					<h2 id="menuAdminH2">공지사항</h2>
 					<div id="menuList">
 
 					</div>
