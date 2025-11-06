@@ -16,4 +16,16 @@ public class PageController {
 	// @PostMapping()
 	// @PutMapping()
 	// @DeleteMapping()
+
+	// /register => localhost:8080/register
+	@GetMapping("/register")
+	public String registerPage() {
+		return "register/index";
+	}
+
+	// /loginPage => localhost:8080/loginPage
+	@GetMapping("/loginPage")
+	public String loginPage() {
+		return "loginPage/index";
+	}
 }
