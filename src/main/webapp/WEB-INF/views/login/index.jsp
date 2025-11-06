@@ -5,6 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>로그인 페이지</title>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/login/style.css" />
 	</head>
 	
 	<body>
@@ -21,7 +22,7 @@
 					</div>
 					
 					<div class="input-group">
-						<label for="password">아이디</label>
+						<label for="password">비밀번호</label>
 						<input type="password" id="password" name="password" required />
 					</div>
 					
