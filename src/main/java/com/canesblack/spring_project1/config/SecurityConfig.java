@@ -18,7 +18,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import jakarta.servlet.ServletException;
@@ -34,35 +33,36 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// csrf 해킹 기법으로 부터 보호조치를 하는 코드 => 나중에 js에다 csrf 기능도 넣어놓을 것
 		http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-			// cors는 특정 서버로만 데이터를 넘길 수 있도록 설정
-			.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-			
-			// 세션 설정
-			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-			
-			.authorizeHttpRequests(authz -> authz
-					.requestMatchers("/", "/loginPage", "logout", "/noticeCheckPage", "/registerPage", "/menu/all")
-					.permitAll().requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
-					.requestMatchers("/resources/**", "/WEB-INF/**").permitAll()
-					.requestMatchers("/noticeAdd", "noticeModifyPage").hasAnyAuthority("ADMIN", "MANAGER")
-					.requestMatchers(HttpMethod.POST, "/menu/add").hasAnyAuthority("ADMIN", "MANAGER")
-					.requestMatchers(HttpMethod.POST, "/menu/update").hasAnyAuthority("ADMIN", "MANAGER")
-					.requestMatchers(HttpMethod.DELETE, "/menu/delete").hasAnyAuthority("ADMIN", "MANAGER")
-					.anyRequest().authenticated()) // 로그인을 해야지만 접근이 가능하기 때문에 로그인 페이지로 자동 이동
-			
-			// formLogin, logout => 컨트롤러 역할
-			.formLogin(login -> login
-					// url을 작성해서 로그인 페이지로 이동할 때
-					.loginPage("/loginPage").loginProcessingUrl("/login").failureUrl("/loginPage?error=true")
-					.usernameParameter("username").passwordParameter("password")
-					.successHandler(authenticationSuccessHandler()).permitAll())
-			
-			.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // /logout URL을 통해 로그아웃 진행
-					.logoutSuccessUrl("/") // 로그아웃 성공 후 이 url로 리다이렉팅
-					.invalidateHttpSession(true) // 세션 무효화
-					.deleteCookies("JSESSIONID") // 쿠키 삭제
-					.permitAll()); // 위 기능을 수행하려면 이 메서드 실행
-		
+				// cors는 특정 서버로만 데이터를 넘길 수 있도록 설정
+				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+				// 세션 설정
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+
+				.authorizeHttpRequests(authz -> authz
+						.requestMatchers("/", "/loginPage", "logout", "/noticeCheckPage", "/registerPage", "/menu/all")
+						.permitAll().requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
+						.requestMatchers("/resources/**", "/WEB-INF/**").permitAll()
+						.requestMatchers("/noticeAdd", "noticeModifyPage").hasAnyAuthority("ADMIN", "MANAGER")
+						.requestMatchers(HttpMethod.POST, "/menu/add").hasAnyAuthority("ADMIN", "MANAGER")
+						.requestMatchers(HttpMethod.POST, "/menu/update").hasAnyAuthority("ADMIN", "MANAGER")
+						.requestMatchers(HttpMethod.DELETE, "/menu/delete").hasAnyAuthority("ADMIN", "MANAGER")
+						.anyRequest().authenticated()) // 로그인을 해야지만 접근이 가능하기 때문에 로그인 페이지로 자동 이동
+
+				// formLogin, logout => 컨트롤러 역할
+				.formLogin(login -> login
+						// url을 작성해서 로그인 페이지로 이동할 때
+						.loginPage("/loginPage").loginProcessingUrl("/login").failureUrl("/loginPage?error=true")
+						.usernameParameter("username").passwordParameter("password")
+						.successHandler(authenticationSuccessHandler()).permitAll())
+
+				.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // /logout URL을 통해
+																									// 로그아웃 진행
+						.logoutSuccessUrl("/") // 로그아웃 성공 후 이 url로 리다이렉팅
+						.invalidateHttpSession(true) // 세션 무효화 => 세션 공간 안에 있던 데이터가 사라짐
+						.deleteCookies("JSESSIONID") // 쿠키 삭제
+						.permitAll()); // 위 기능을 수행하려면 이 메서드 실행
+
 		// 최종 http에 적용시킬 때 사용하는 메서드
 		return http.build();
 	}
@@ -86,7 +86,7 @@ public class SecurityConfig {
 				}
 
 				session.setAttribute("username", authentication.getName()); // 세션에 로그인 한 아이디 저장
-				session.setAttribute("isAuthentication", true);	// 세션에 로그인 여부 저장
+				session.setAttribute("isAuthenticated", true); // 세션에 로그인 여부 저장
 
 				// request.getContextPath() = localhost:8080
 				response.sendRedirect(request.getContextPath() + "/");
@@ -101,7 +101,7 @@ public class SecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
