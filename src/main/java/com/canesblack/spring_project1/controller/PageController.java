@@ -28,9 +28,10 @@ public class PageController {
 		return "register/index";
 	}
 
-	// /loginPage => localhost:8080/loginPage
 	@GetMapping("/loginPage")
-	public String loginPage() {
+	public String loginPage(HttpServletRequest request, org.springframework.ui.Model model) {
+		CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+		model.addAttribute("_csrf", csrfToken);
 		return "login/index";
 	}
 }

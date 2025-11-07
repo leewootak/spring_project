@@ -15,6 +15,7 @@
 				<div class="register-container">
 					<h2>회원가입</h2>
 					<form action="${pageContext.request.contextPath}/register" method="post">
+						<!-- CSRF 토큰 추가 -->
 						<input type="hidden" name="_csrf" value="${_csrf.token}" />
 
 						<div class="input-group">

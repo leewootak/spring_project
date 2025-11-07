@@ -36,28 +36,34 @@ public class SecurityConfig {
 		http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 			// cors는 특정 서버로만 데이터를 넘길 수 있도록 설정
 			.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+			
 			// 세션 설정
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+			
 			.authorizeHttpRequests(authz -> authz
 					.requestMatchers("/", "/loginPage", "logout", "/noticeCheckPage", "/registerPage", "/menu/all")
 					.permitAll().requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
 					.requestMatchers("/resources/**", "/WEB-INF/**").permitAll()
-					.requestMatchers("/noticerAdd", "noticeModifyPage").hasAnyAuthority("ADMIN", "MANAGER")
+					.requestMatchers("/noticeAdd", "noticeModifyPage").hasAnyAuthority("ADMIN", "MANAGER")
 					.requestMatchers(HttpMethod.POST, "/menu/add").hasAnyAuthority("ADMIN", "MANAGER")
 					.requestMatchers(HttpMethod.POST, "/menu/update").hasAnyAuthority("ADMIN", "MANAGER")
 					.requestMatchers(HttpMethod.DELETE, "/menu/delete").hasAnyAuthority("ADMIN", "MANAGER")
-					.anyRequest().authenticated())
+					.anyRequest().authenticated()) // 로그인을 해야지만 접근이 가능하기 때문에 로그인 페이지로 자동 이동
+			
+			// formLogin, logout => 컨트롤러 역할
 			.formLogin(login -> login
 					// url을 작성해서 로그인 페이지로 이동할 때
 					.loginPage("/loginPage").loginProcessingUrl("/login").failureUrl("/loginPage?error=true")
 					.usernameParameter("username").passwordParameter("password")
 					.successHandler(authenticationSuccessHandler()).permitAll())
+			
 			.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // /logout URL을 통해 로그아웃 진행
 					.logoutSuccessUrl("/") // 로그아웃 성공 후 이 url로 리다이렉팅
 					.invalidateHttpSession(true) // 세션 무효화
 					.deleteCookies("JSESSIONID") // 쿠키 삭제
-					.permitAll());
-
+					.permitAll()); // 위 기능을 수행하려면 이 메서드 실행
+		
+		// 최종 http에 적용시킬 때 사용하는 메서드
 		return http.build();
 	}
 
@@ -79,8 +85,8 @@ public class SecurityConfig {
 					session.setAttribute("MANAGER", true);
 				}
 
-				session.setAttribute("username", authentication.getName());
-				session.setAttribute("isAuthentication", true);
+				session.setAttribute("username", authentication.getName()); // 세션에 로그인 한 아이디 저장
+				session.setAttribute("isAuthentication", true);	// 세션에 로그인 여부 저장
 
 				// request.getContextPath() = localhost:8080
 				response.sendRedirect(request.getContextPath() + "/");
@@ -91,7 +97,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	// 비밀번호 암호화
+	// 비밀번호 암호화 (스프링 프레임워크)
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
