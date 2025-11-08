@@ -31,7 +31,7 @@ public class SecurityConfig {
 	@Bean
 	// SpringSecurity 기능 사용 시 이 메소드 안에 내용 작성
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		// csrf 해킹 기법으로 부터 보호조치를 하는 코드 => 나중에 js에다 csrf 기능도 넣어놓을 것
+		// csrf 해킹 기법으로 부터 보호조치를 하는 코드 => 나중에 HTML, jsp, js에 csrf 보호 토큰도 넣어놓을 것
 		http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 				// cors는 특정 서버로만 데이터를 넘길 수 있도록 설정
 				.cors(cors -> cors.configurationSource(corsConfigurationSource()))

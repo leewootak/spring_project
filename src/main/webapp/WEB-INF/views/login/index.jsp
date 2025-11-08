@@ -1,4 +1,5 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -13,6 +14,11 @@
 			<div id="login-container-wrapper">
 				<div id="login-container">
 					<h2>로그인</h2>
+					<!-- 로그인 실패 시 오류 메시지 표시 -->
+					<c:if test="${not empty param.error}"> <!-- 값이 있을 때 -->
+						<p style="color:red;">아이디 또는 비밀번호가 잘못되었습니다.</p>
+					</c:if>
+					
 					<!-- localhost:8080/login -->
 					<form action="${pageContext.request.contextPath}/login" method="post">
 						<!-- CSRF 토큰 추가 -->

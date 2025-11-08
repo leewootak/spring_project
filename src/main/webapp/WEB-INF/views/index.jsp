@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!-- c에 jstl의 기능 담기 -->
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<!-- 스프링 부트에서 자동으로 csrf 토큰 삽입 -->
+		<meta name="_csrf" content="${_csrf.token}">
+		<meta name="_csrf_header" content="${_csrf.headerName}">
 		<title>wt 카페</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/style.css" />
 	</head>
@@ -28,5 +31,6 @@
 			</div>
 	
 			<%@include file="/WEB-INF/views/common/footer.jsp" %>
+			<script type="text.javascript" src="${pageContext.request.contextPath}/resources/js/script.js"></script>
 	</body>
 </html>
