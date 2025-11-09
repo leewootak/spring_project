@@ -18,13 +18,13 @@ public interface MenuRestMapper {
 	// 두번째 게시글 -> idx: 2
 	// 가장 최근 게시글이 공지사항 페이지 상단에 보여지도록 DESC
 	// * 쓰지말고 idx, memID 등 요소 다 작성하기
-	@Select("SELECT idx, memID, title, content, indate, count FROM backend_spring_project.menu ORDER BY idx DESC")
+	@Select("SELECT idx, memID, title, content, writer, indate, count FROM backend_spring_project.menu ORDER BY idx DESC")
 	public List<Menu> getLists();
 
 	@Insert("INSERT INTO backend_spring_project.menu(memID, title, content, writer, indate) VALUES(#{memID}, #{title}, #{content}, #{writer}, #{indate})")
 	public void boardInsert(Menu menu);
 
-	@Select("SELECT idx, memID, title, content, indate, count FROM backend_spring_project.menu WHERE idx=#{idx}")
+	@Select("SELECT idx, memID, title, content, writer, indate, count FROM backend_spring_project.menu WHERE idx=#{idx}")
 	public Menu boardContent(int idx);
 
 	@Delete("DELETE FROM backend_spring_project.menu WHERE idx=#{idx}")
