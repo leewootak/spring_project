@@ -1,8 +1,10 @@
 package com.canesblack.spring_project1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.canesblack.spring_project1.service.UserService;
@@ -42,7 +44,9 @@ public class PageController {
 	}
 
 	@GetMapping("/noticeAddPage")
-	public String noticeAddPage() {
+	public String noticeAddPage(Model model, Authentication authentication) {
+		String writer = userService.findWriter(authentication.getName());
+		model.addAttribute("writer", writer);
 		return "noticeAdd/index";
 	}
 }
