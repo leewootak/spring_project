@@ -24,6 +24,6 @@ document.getElementById("buttonDelete").addEventListener("click", function() {
 		alert("삭제가 성공적으로 진행되었습니다.");
 		window.location.href='/'; // 메인 페이지
 	}).catch(error => {
-		console.log(`에러발생:${error}`);
+		console.log(`에러발생: ${error}`);
 	})
 })

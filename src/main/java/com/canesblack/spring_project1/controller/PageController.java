@@ -62,4 +62,11 @@ public class PageController {
 		model.addAttribute("menu", menu);
 		return "noticeCheck/index";
 	}
+
+	@GetMapping("/noticeModifyPage")
+	public String showNoticeModifyPage(@RequestParam("idx") int idx, Model model) {
+		Menu menu = menuRestService.boardContent(idx);
+		model.addAttribute("menu", menu);
+		return "noticeModify/index";
+	}
 }
