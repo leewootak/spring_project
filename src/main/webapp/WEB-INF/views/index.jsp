@@ -23,7 +23,7 @@
 					<!-- 세션 공간에 저장되어있는 "MANAGER"의 값이 true일 때 작성이라는 버튼이 보이도록 설정 -->
 					<c:if test="${MANAGER == true}">
 						<!-- location.href=localhost:8080/noticeAdd -->
-						<button type="button" onclick="location.href=`${pageContext.request.contextPath}/noticeAdd`">작성</button>
+						<button type="button" onclick="location.href=`${pageContext.request.contextPath}/noticeAddPage`">작성</button>
 					</c:if>
 					
 					<div id="menuList"></div>
