@@ -35,16 +35,97 @@ Spring Boot 기반의 서버 사이드 렌더링 웹 애플리케이션입니다
 - `src/main/webapp/resources/` : 정적 리소스(css, js)
 - `build.gradle` : 빌드/의존성 정의
 
-## 주요 기능 (구현/추정)
+## 주요 기능
 - 사용자 로그인 / 권한 관리 (Spring Security)
 - CRUD 기반 게시판/공지사항 (JSP + MyBatis)
 - API 문서 자동화 (SpringDoc / Swagger UI)
 - 서버 사이드 렌더링 기반의 페이지 제공
 
 ## Swagger / API 문서
+<img width="1393" height="667" alt="Image" src="https://github.com/user-attachments/assets/cbf7da96-1b6d-4353-a098-9b1896a7323e" />
 
 
-경로는 설정에 따라 달라질 수 있습니다.
+## 아키텍처 다이어그램 (Mermaid)
+
+### 컴포넌트 다이어그램
+
+```mermaid
+flowchart TD
+  Browser["User<br/>(Browser)"]
+
+  subgraph Server ["Spring Boot Application"]
+    direction TB
+    Controllers["Controllers<br/>(PageController, MenuRestController, UserController)"]
+    Services["Service Layer<br/>(MenuRestService, UserService, UserDetailsServiceImpl)"]
+    Mappers["MyBatis Mappers<br/>(MenuRestMapper, UserMapper)"]
+    Entities["Entities / DTOs<br/>(Menu, User, CustomUser)"]
+    Security["Security Layer<br/>(SecurityConfig, BCrypt, CSRF, CORS)"]
+    Views["JSP Views<br/>(WEB-INF/views/*.jsp)"]
+    Static["Static Resources<br/>(/resources, /static)"]
+    Swagger["API Docs (SpringDoc/Swagger)"]
+  end
+
+  DB["MySQL Database"]
+
+  Browser -->|HTTP GET/POST / REST| Controllers
+  Controllers --> Services
+  Services --> Mappers
+  Mappers -->|SQL| DB
+  Controllers --> Views
+  Browser -->|static files| Static
+  Browser -->|OpenAPI UI| Swagger
+  Controllers --> Security
+  Security --> Services
+  Security -->|User lookup| Services
+
+```
+
+### 시퀀스 다이어그램: 로그인
+
+```mermaid
+sequenceDiagram
+  participant B as Browser
+  participant C as Controller (formLogin)
+  participant S as SecurityFilterChain
+  participant UDS as UserDetailsServiceImpl
+  participant DB as MySQL
+  participant APP as Application (session)
+
+  B->>C: POST /login (username, password)
+  C->>S: formLogin processing
+  S->>UDS: loadUserByUsername(username)
+  UDS->>DB: SELECT user by username
+  DB-->>UDS: user row
+  UDS-->>S: UserDetails (CustomUser)
+  S->>S: password match (BCrypt)
+  alt if ok
+    S->>APP: create session, set attributes (username, roles)
+    S-->>B: 302 Redirect to "/"
+  else invalid
+    S-->>B: 302 Redirect to "/loginPage?error=true"
+  end
+```
+
+### 시퀀스 다이어그램: 게시글 작성 (REST)
+
+```mermaid
+sequenceDiagram
+  participant B as Browser
+  participant MRC as MenuRestController
+  participant MS as MenuRestService
+  participant MM as MenuRestMapper
+  participant DB as MySQL
+
+  B->>MRC: POST /menu/add (JSON body)
+  MRC->>MS: boardInser(menu)
+  MS->>MM: boardInsert(menu)  // MyBatis mapper -> SQL
+  MM->>DB: INSERT INTO menu(...)
+  DB-->>MM: result
+  MM-->>MS: ok
+  MS-->>MRC: ok
+  MRC-->>B: 200 OK (message)
+```
+
 
 ## 주요 파일 / 확인 포인트
 - `build.gradle` : 의존성 및 플러그인
