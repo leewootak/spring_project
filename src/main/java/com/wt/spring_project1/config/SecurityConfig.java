@@ -40,7 +40,7 @@ public class SecurityConfig {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
 
 				.authorizeHttpRequests(authz -> authz
-						.requestMatchers("/", "/loginPage", "logout", "/noticeCheckPage", "/registerPage", "/menu/all")
+						.requestMatchers("/", "/loginPage", "/logout", "/noticeCheckPage", "/registerPage", "/menu/all")
 						.permitAll().requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
 						.requestMatchers("/resources/**", "/WEB-INF/**").permitAll()
 						.requestMatchers("/noticeAddPage", "noticeModifyPage").hasAnyAuthority("ADMIN", "MANAGER")
