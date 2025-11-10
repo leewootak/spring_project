@@ -1,4 +1,4 @@
-package com.canesblack.spring_project1.controller;
+package com.wt.spring_project1.controller;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.canesblack.spring_project1.entity.Menu;
-import com.canesblack.spring_project1.service.MenuRestService;
+import com.wt.spring_project1.entity.Menu;
+import com.wt.spring_project1.service.MenuRestService;
 
 // RestApi를 개발할 때 사용
 @RestController
@@ -44,7 +44,7 @@ public class MenuRestController {
 		menu.setCount(0);
 
 		// 메뉴를 DB에 삽입
-		menuRestService.boardInser(menu);
+		menuRestService.boardInsert(menu);
 		return ResponseEntity.ok("게시글 잘 작성됨.");
 	}
 

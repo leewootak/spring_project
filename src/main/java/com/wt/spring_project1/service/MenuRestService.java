@@ -1,12 +1,12 @@
-package com.canesblack.spring_project1.service;
+package com.wt.spring_project1.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.canesblack.spring_project1.entity.Menu;
-import com.canesblack.spring_project1.mapper.MenuRestMapper;
+import com.wt.spring_project1.entity.Menu;
+import com.wt.spring_project1.mapper.MenuRestMapper;
 
 @Service
 public class MenuRestService {
@@ -19,7 +19,7 @@ public class MenuRestService {
 	}
 
 	// 게시글을 추가하는 메소드
-	public void boardInser(Menu menu) {
+	public void boardInsert(Menu menu) {
 		menuRestMapper.boardInsert(menu);
 	}
 

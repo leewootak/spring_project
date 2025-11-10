@@ -1,4 +1,4 @@
-package com.canesblack.spring_project1.controller;
+package com.wt.spring_project1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.canesblack.spring_project1.entity.Role;
-import com.canesblack.spring_project1.entity.User;
-import com.canesblack.spring_project1.service.UserService;
+import com.wt.spring_project1.entity.Role;
+import com.wt.spring_project1.entity.User;
+import com.wt.spring_project1.service.UserService;
 
 @Controller
 public class UserController {

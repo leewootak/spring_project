@@ -1,4 +1,4 @@
-package com.canesblack.spring_project1.service;
+package com.wt.spring_project1.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.canesblack.spring_project1.entity.CustomUser;
-import com.canesblack.spring_project1.entity.User;
-import com.canesblack.spring_project1.mapper.UserMapper;
+import com.wt.spring_project1.entity.CustomUser;
+import com.wt.spring_project1.entity.User;
+import com.wt.spring_project1.mapper.UserMapper;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

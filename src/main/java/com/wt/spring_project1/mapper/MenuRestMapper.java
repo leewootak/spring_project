@@ -1,4 +1,4 @@
-package com.canesblack.spring_project1.mapper;
+package com.wt.spring_project1.mapper;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.canesblack.spring_project1.entity.Menu;
+import com.wt.spring_project1.entity.Menu;
 
 // @Component와 비슷 => @ComponentScan
 // @Mapper => @MapperScan => 자동으로 스프링 컨테이너에 등록

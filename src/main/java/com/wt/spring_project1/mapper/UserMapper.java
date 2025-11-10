@@ -1,4 +1,4 @@
-package com.canesblack.spring_project1.mapper;
+package com.wt.spring_project1.mapper;
 
 //import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 //import org.apache.ibatis.annotations.Update;
 
-import com.canesblack.spring_project1.entity.User;
+import com.wt.spring_project1.entity.User;
 
 //@Component와 비슷하게 스프링 컨테이너에 등록
 // 자바와 mysql 사이 통역 역할

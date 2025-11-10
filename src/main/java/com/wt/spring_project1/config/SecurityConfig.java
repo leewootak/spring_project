@@ -1,4 +1,4 @@
-package com.canesblack.spring_project1.config;
+package com.wt.spring_project1.config;
 
 import java.io.IOException;
 import java.util.Arrays;

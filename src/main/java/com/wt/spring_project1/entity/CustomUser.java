@@ -1,4 +1,4 @@
-package com.canesblack.spring_project1.entity;
+package com.wt.spring_project1.entity;
 
 import org.springframework.security.core.authority.AuthorityUtils;
 

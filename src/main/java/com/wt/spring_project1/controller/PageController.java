@@ -1,4 +1,4 @@
-package com.canesblack.spring_project1.controller;
+package com.wt.spring_project1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -8,9 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.canesblack.spring_project1.entity.Menu;
-import com.canesblack.spring_project1.service.MenuRestService;
-import com.canesblack.spring_project1.service.UserService;
+import com.wt.spring_project1.entity.Menu;
+import com.wt.spring_project1.service.MenuRestService;
+import com.wt.spring_project1.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
